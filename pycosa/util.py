@@ -76,7 +76,7 @@ def remove_multicollinearity(df: pd.DataFrame):
     cliques_remaining = True
     while cliques_remaining:
         cliques_remaining = False
-        cliques = nx.find_cliques(G)remove_multicollinearity, get_vif
+        cliques = nx.find_cliques(G)
         for clique in cliques:
             # check if exactly one col is 1 in each row
             sums_per_row = df_configs[clique].sum(axis=1).unique()
@@ -105,6 +105,39 @@ def reconstruct_categorical_variable(
     ----------
     df : pd.DataFrame
         Data frame containing discretized numerical features.
+def reconstruct_categorical_variable(
+        df: pd.DataFrame,
+        replace_map: dict,
+        new_option: str,
+        drop_old: bool = True
+    ):
+    """
+    Reconstructs a numerical option that has been discretized. 
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Data frame containing discretized numerical features.
+    replace_map : dict
+        Mapping of column names to option value of column $new_option.
+    new_option : str
+        Name of the newly created column.
+    drop_old : bool, optional
+        Should the to-be-replaced columns be dropped? The default is True.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        Transformed data frame with new  column.
+
+    """
+    maximums = df[replace_map.keys()].idxmax(axis=1)
+    maximums = maximums.replace(replace_map)
+    df[new_option] = maximums
+
+    if drop_old:
+        df = df.drop(columns=replace_map.keys())
+  
     replace_map : dict
         Mapping of column names to option value of column $new_option.
     new_option : str
