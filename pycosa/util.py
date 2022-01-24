@@ -90,3 +90,38 @@ def remove_multicollinearity(df: pd.DataFrame):
                 break
 
     return df
+
+def reconstruct_categorical_variable(
+        df: pd.DataFrame,
+        replace_map: dict,
+        new_option: str,
+        drop_old: bool = True
+    ):
+    """
+    Reconstructs a numerical option that has been discretized. 
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Data frame containing discretized numerical features.
+    replace_map : dict
+        Mapping of column names to option value of column $new_option.
+    new_option : str
+        Name of the newly created column.
+    drop_old : bool, optional
+        Should the to-be-replaced columns be dropped? The default is True.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        Transformed data frame with new  column.
+
+    """
+  maximums = df[replace_map.keys()].idxmax(axis=1)
+  maximums = maximums.replace(replace_map)
+  df[new_option] = maximums
+
+  if drop_old:
+    df = df.drop(columns=replace_map.keys())
+  
+  return df
