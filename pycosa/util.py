@@ -76,7 +76,7 @@ def remove_multicollinearity(df: pd.DataFrame):
     cliques_remaining = True
     while cliques_remaining:
         cliques_remaining = False
-        cliques = nx.find_cliques(G)
+        cliques = nx.find_cliques(G)remove_multicollinearity, get_vif
         for clique in cliques:
             # check if exactly one col is 1 in each row
             sums_per_row = df_configs[clique].sum(axis=1).unique()
@@ -90,6 +90,7 @@ def remove_multicollinearity(df: pd.DataFrame):
                 break
 
     return df
+
 
 def reconstruct_categorical_variable(
         df: pd.DataFrame,
@@ -117,11 +118,9 @@ def reconstruct_categorical_variable(
         Transformed data frame with new  column.
 
     """
-  maximums = df[replace_map.keys()].idxmax(axis=1)
-  maximums = maximums.replace(replace_map)
-  df[new_option] = maximums
+    maximums = df[replace_map.keys()].idxmax(axis=1)
+    maximums = maximums.replace(replace_map)
+    df[new_option] = maximums
 
-  if drop_old:
-    df = df.drop(columns=replace_map.keys())
-  
-  return df
+    if drop_old:
+        df = df.drop(columns=replace_map.keys())
