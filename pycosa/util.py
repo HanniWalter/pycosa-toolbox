@@ -170,4 +170,32 @@ def construct_categorical_variable(
         
     return df
 
+def construct_interaction_terms(
+        df: pd.DataFrame,
+        categorical_column: str,
+        sep: str = '__',
+        drop_old: bool = True
+    ):
     
+    # get set of unique values
+    unique_values = df[categorical_column].unique()
+    
+    interacting_columns = df.drop(columns=[categorical_column]).columns
+    
+    for uvalue in unique_values:
+        for icolumn in interacting_columns:
+            index = df.index[
+                df[categorical_column] == uvalue
+            ]      
+            new_column = np.zeros(shape=(df.shape[0],))
+            new_column[index] = df.iloc[index][icolumn]
+            
+            
+            # mask NaN as 0
+            new_column = np.nan_to_num(new_column)
+            column_name = '{}{}{}'.format(uvalue, sep, icolumn)
+            df[column_name] = new_column
+    
+    if drop_old:
+        df = df.drop(columns=[i for i in interacting_columns] + [categorical_column])
+    return df
