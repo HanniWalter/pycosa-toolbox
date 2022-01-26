@@ -75,7 +75,7 @@ def remove_multicollinearity(df: pd.DataFrame):
 
     cliques_remaining = True
     while cliques_remaining:
-        cliques_remaining = False
+        cliques_remaining = FalseMinMaxScaler
         cliques = nx.find_cliques(G)
         for clique in cliques:
             # check if exactly one col is 1 in each row
@@ -124,5 +124,50 @@ def reconstruct_categorical_variable(
 
     if drop_old:
         df = df.drop(columns=replace_map.keys())
+  
+    return df
+
+def construct_categorical_variable(
+        df: pd.DataFrame,
+        categorical_column: str,
+        drop_old: bool = True
+    ):
+    """
+    Introduces a dummy variable (one-hot encoding) for each value of a 
+    categorical variable.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Data frame containing the independent variables
+    column : str
+        Column to split.
+    drop_old : bool, optional
+        Should the to-be-replaced columns be dropped? The default is True.
+    
+    Returns
+    -------
+    df : pd.DataFrame
+        Transformed data frame with new columns.
+
+    """
+    
+    # get set of unique values
+    unique_values = df[categorical_column].unique()
+    
+    # create a new column in df for each unique value
+    for uvalue in unique_values:
+
+        index = df.index[df[categorical_column] == uvalue]
+        new_column = np.zeros(shape=(df.shape[0],))
+        new_column[index] = 1
         
-    return df 
+        column_name = '{}_{}'.format(categorical_column, uvalue)
+        df[column_name] = new_column
+        
+    if drop_old:
+        df = df.drop(columns=[categorical_column])
+        
+    return df
+
+    
