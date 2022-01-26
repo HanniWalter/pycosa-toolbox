@@ -75,7 +75,7 @@ def remove_multicollinearity(df: pd.DataFrame):
 
     cliques_remaining = True
     while cliques_remaining:
-        cliques_remaining = FalseMinMaxScaler
+        cliques_remaining = False
         cliques = nx.find_cliques(G)
         for clique in cliques:
             # check if exactly one col is 1 in each row
