@@ -90,7 +90,7 @@ def remove_multicollinearity(df: pd.DataFrame):
                 break
 
     return df
-MinMaxScaler
+
 
 def reconstruct_categorical_variable(
         df: pd.DataFrame,
