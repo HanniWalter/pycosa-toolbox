@@ -34,7 +34,7 @@ def mirrored_histogram(
     plt.fill_between(x_range, kde(x_range) * -1, color='orange', label=label_b)
     
     # plot means
-    if means:
+    if medians:
         
         # normalize
         ymin, ymax = ax.get_ylim()
