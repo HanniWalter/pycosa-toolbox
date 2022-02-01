@@ -13,7 +13,7 @@ def mirrored_histogram(
         label_a: str,
         label_b: str,
         bandwith: float = 0.05,
-        figsize=(5,2.5),
+        figsize=(6,2.5),
         export_name: str = None,
         xlabel: str = None,
         medians: bool = True,
@@ -44,7 +44,7 @@ def mirrored_histogram(
         # find location of 0
         y_zero = abs(ymin) / yrange
         
-        ax.axvline(np.median(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
+        ax.axvline(np.median(dist_a), color='black', linewidth=0.8, label='median', ymin=y_zero, ymax=1)
         ax.axvline(np.median(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
     
     
@@ -55,7 +55,7 @@ def mirrored_histogram(
     plt.ylabel('Density')
     
     if legend:
-        plt.legend()
+        plt.legend(bbox_to_anchor=(1.3, 0.6))
     
     plt.axhline(0, color='black', linewidth=0.5)
     
