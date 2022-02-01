@@ -35,8 +35,17 @@ def mirrored_histogram(
     
     # plot means
     if means:
-        ax.axvline(np.mean(dist_a), color='black', linewidth=0.8, label='mean')
-        ax.axvline(np.mean(dist_b), color='black', linewidth=0.8)
+        
+        # normalize
+        ymin, ymax = ax.get_ylim()
+        yrange = ymax - ymin
+        print(yrange)
+        
+        # find location of 0
+        y_zero = abs(ymin) / yrange
+        
+        ax.axvline(np.mean(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
+        ax.axvline(np.mean(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
     
     
     # make xticks positive 
@@ -60,5 +69,5 @@ if __name__ == "__main__":
     a = np.random.normal(90, 8, size=1000)
     b = np.random.laplace(30, 4, size=1000)
     
-    mirrored_histogram(a, b, 'before', 'after', xlabel='Throughput', means=False)
+    mirrored_histogram(a, b, 'before', 'after', xlabel='Throughput', means=True)
 
