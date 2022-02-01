@@ -53,7 +53,9 @@ def mirrored_histogram(
     ax.set_yticklabels([round(float(abs(tick)),2) for tick in ticks])
     
     plt.ylabel('Density')
-    plt.legend()
+    
+    if legend:
+        plt.legend()
     
     plt.axhline(0, color='black', linewidth=0.5)
     
