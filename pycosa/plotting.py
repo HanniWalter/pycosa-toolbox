@@ -38,6 +38,8 @@ def mirrored_histogram(
         ax.axvline(np.mean(dist_a), ymin=0.5, ymax=1, color='black', linewidth=0.8, label='mean')
         ax.axvline(np.mean(dist_b), color='black', ymin=0, ymax=0.5, linewidth=0.8)
     
+    # plot horizontal line
+    plt.axhline(0, color='black', linewidth=0.5)
     
     # make xticks positive 
     ticks =  ax.get_yticks()
