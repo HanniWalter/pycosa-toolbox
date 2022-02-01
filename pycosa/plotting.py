@@ -16,7 +16,7 @@ def mirrored_histogram(
         figsize=(5,2.5),
         export_name: str = None,
         xlabel: str = None,
-        means: bool = True,
+        medians: bool = True,
         legend: bool = True
     ):
     
@@ -38,14 +38,14 @@ def mirrored_histogram(
         
         # normalize
         ymin, ymax = ax.get_ylim()
-        yrange = ymax - ymin
+        yrange = ymax - ymin1
         print(yrange)
         
         # find location of 0
         y_zero = abs(ymin) / yrange
         
-        ax.axvline(np.mean(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
-        ax.axvline(np.mean(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
+        ax.axvline(np.medians(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
+        ax.axvline(np.medians(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
     
     
     # make xticks positive 
@@ -69,5 +69,5 @@ if __name__ == "__main__":
     a = np.random.normal(90, 8, size=1000)
     b = np.random.laplace(30, 4, size=1000)
     
-    mirrored_histogram(a, b, 'before', 'after', xlabel='Throughput', means=True)
+    mirrored_histogram(a, b, 'before', 'after', xlabel='Throughput', medians=True)
 
