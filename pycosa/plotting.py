@@ -44,8 +44,8 @@ def mirrored_histogram(
         # find location of 0
         y_zero = abs(ymin) / yrange
         
-        ax.axvline(np.medians(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
-        ax.axvline(np.medians(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
+        ax.axvline(np.median(dist_a), color='black', linewidth=0.8, label='mean', ymin=y_zero, ymax=1)
+        ax.axvline(np.median(dist_b), color='black', linewidth=0.8, ymin=0, ymax=y_zero)
     
     
     # make xticks positive 
