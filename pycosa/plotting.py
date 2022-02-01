@@ -4,49 +4,49 @@
 import numpy as np
 from typing import Tuple
 import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import gaussian_kde
 
 def mirrored_histogram(
         dist_a: np.array,
         dist_b: np.array,
         label_a: str,
         label_b: str,
-        bins: Tuple[int, int] = (200,200),
+        bandwith: float = 0.05,
         figsize=(5,2.5),
         export_name: str = None,
         xlabel: str = None,
-        means: bool = True
+        means: bool = True,
+        legend: bool = True
     ):
-    
-    # compute bins and frequencies
-    aa, aaa = np.histogram(dist_a, bins=bins[0])
-    bb, bbb = np.histogram(dist_b, bins=bins[1])
     
     # init figure
     plt.figure()
     fig, ax = plt.subplots(figsize=figsize)
     
-    # get maximum frequency & make plot symmetric
-    maxx = max(max(aa), max(bb))
-    plt.ylim(-maxx, maxx)
+    sns.kdeplot(dist_a, x="var1",  fill=True, alpha=1, bw=bandwith, label=label_a)
     
-    # plot 'histograms'
-    ax.bar(aaa[:-1], aa, label=label_a)
-    ax.bar(bbb[:-1], bb*-1, label=label_b)
+    # plot density chart for var2
+    kde = gaussian_kde(dist_b, bw_method=bandwith)
+    x_range = np.linspace(min(dist_b), max(dist_b), len(dist_b))
+    
+    sns.lineplot(x=x_range, y=kde(x_range) * -1, color='orange') 
+    plt.fill_between(x_range, kde(x_range) * -1, color='orange', label=label_b)
     
     # plot means
     if means:
-        ax.axvline(np.mean(dist_a), ymin=0.5, ymax=1, color='black', linewidth=0.8, label='mean')
-        ax.axvline(np.mean(dist_b), color='black', ymin=0, ymax=0.5, linewidth=0.8)
+        ax.axvline(np.mean(dist_a), color='black', linewidth=0.8, label='mean')
+        ax.axvline(np.mean(dist_b), color='black', linewidth=0.8)
     
-    # plot horizontal line
-    plt.axhline(0, color='black', linewidth=0.5)
     
     # make xticks positive 
     ticks =  ax.get_yticks()
-    ax.set_yticklabels([int(abs(tick)) for tick in ticks])
+    ax.set_yticklabels([round(float(abs(tick)),2) for tick in ticks])
     
-    plt.ylabel('Frequency')
+    plt.ylabel('Density')
     plt.legend()
+    
+    plt.axhline(0, color='black', linewidth=0.5)
     
     if xlabel is not None:
         plt.xlabel(xlabel)
@@ -57,7 +57,8 @@ def mirrored_histogram(
         plt.show()
     
 if __name__ == "__main__":
-    a = np.random.laplace(20, 8, size=1000)
+    a = np.random.normal(90, 8, size=1000)
     b = np.random.laplace(30, 4, size=1000)
     
-    mirrored_histogram(a, b, 'before', 'after', bins=(200,200), xlabel='Throughput')
+    mirrored_histogram(a, b, 'before', 'after', xlabel='Throughput', means=False)
+
