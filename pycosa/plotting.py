@@ -38,7 +38,7 @@ def mirrored_histogram(
         
         # normalize
         ymin, ymax = ax.get_ylim()
-        yrange = ymax - ymin1
+        yrange = ymax - ymin
         print(yrange)
         
         # find location of 0
