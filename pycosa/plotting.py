@@ -18,8 +18,8 @@ def mirrored_histogram(
     ):
     
     # compute bins and frequencies
-    aa, aaa = np.histogram(a, bins=bins[0])
-    bb, bbb = np.histogram(b, bins=bins[1])
+    aa, aaa = np.histogram(dist_a, bins=bins[0])
+    bb, bbb = np.histogram(dist_b, bins=bins[1])
     
     # init figure
     plt.figure()
