@@ -6,3 +6,4 @@ pyeda
 xmltodict
 pyDOE2
 statsmodels
+matplotlib

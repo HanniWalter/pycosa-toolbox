@@ -29,6 +29,7 @@ install_requires = [
     "pyeda",
     "networkx",
     "statsmodels",
+    "matplotlib",
     "pyDOE2",
 ]
 
