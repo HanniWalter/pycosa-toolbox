@@ -449,7 +449,7 @@ class SampleStore:
         # mandatory = nunique[nunique == 1].index
         # sample.drop(columns=mandatory, inplace=True)
 
-        sample = self.df
+        sample = self.df * 1
 
         # initialize stuff and foo
         enabled = []
