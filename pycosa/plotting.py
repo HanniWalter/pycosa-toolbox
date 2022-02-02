@@ -39,7 +39,6 @@ def mirrored_histogram(
         # normalize
         ymin, ymax = ax.get_ylim()
         yrange = ymax - ymin
-        print(yrange)
         
         # find location of 0
         y_zero = abs(ymin) / yrange
@@ -55,7 +54,7 @@ def mirrored_histogram(
     plt.ylabel('Density')
     
     if legend:
-        plt.legend(bbox_to_anchor=(1.3, 0.6))
+        plt.legend() # bbox_to_anchor=(1.3, 0.6)
     
     plt.axhline(0, color='black', linewidth=0.5)
     
