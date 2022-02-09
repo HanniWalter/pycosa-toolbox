@@ -10,3 +10,8 @@ pip install git+https://github.com/smba/pycosa-toolbox.git@main
 pip install --upgrade git+https://github.com/smba/pycosa-toolbox.git@main 
 ```
 ## Documentation / Getting Started
+
+### Sampling
+### Learning
+### Modeling
+### Plotting
