@@ -1,5 +1,6 @@
 # pycosa-toolbox
-Python library for configuration sampling and more.
+Loose collection of imeplementations for configuration sampling, learning configuration-dependent non-functional properties, and arguably useful plotting shortcuts in Python. 
+
 ## Installation
 ```bash
 # install current version
